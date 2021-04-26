@@ -1,0 +1,125 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>LUTW Project Reports</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{css/style.css}">
+</head>
+<body>
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+
+    <div class="container-lg mt-2">
+        <form th:action="@{/report/{id}(id=${report.report.id} ? ${report.report.id} : 'new')}" th:object="${report}" method="post">
+
+            <div class="mb-3">
+                <input type="hidden" th:field="*{report.id}" th:value="*{report.id}"/>
+            </div>
+            
+            <div class="mb-3">
+                <label for="name" class="fw-bold">Name</label>
+                <input type="text" class="form-control" th:value="*{report.name}" th:field="*{report.name}" disabled readonly/>
+            </div>
+            
+            <div class="mb-3">
+                <label for="region" class="fw-bold">Region</label>
+                <input type="text" class="form-control" th:value="*{report.region}" th:field="*{report.region}" disabled readonly/>
+            </div><hr>
+            
+            <div id="lessonsLearned">
+                <div class="mb-3" th:each="lesson,status : ${report.report.lessonsLearned}">
+                    <label for="${lesson.lesson}" class="fw-bold">Lesson:</label>
+                    <input type="hidden" th:value="${lesson.id}" th:field="*{report.lessonsLearned[__${status.index}__].id}"/>
+                    <input type="text" class="form-control" th:value="${lesson.lesson}" th:field="*{report.lessonsLearned[__${status.index}__].lesson}" disabled readonly/>
+                </div>
+            </div><hr>
+            
+            <div id="stories">
+                <div class="mb-3" th:each="story,status : ${report.report.beneficiaryStory}">
+                    <label for="${story.story}" class="fw-bold">Beneficiary Story:</label>
+                    <input type="hidden" th:value="${story.id}" th:field="*{report.beneficiaryStory[__${status.index}__].id}"/>
+                    <div class="row mb-3">
+                        <label for="bName" class="col-sm-2 col-form-label">Name of Beneficiary</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="bName" class="form-control" th:value="${story.bName}" th:field="*{report.beneficiaryStory[__${status.index}__].bName}" disabled readonly/>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="bStory" class="col-sm-2 col-form-label">Story</label>
+                        <div class="col-sm-10">
+                            <textarea id="bStory" class="form-control" th:value="${story.story}" th:field="*{report.beneficiaryStory[__${status.index}__].story}" disabled readonly/>
+                        </div>
+                    </div>
+                </div>
+            </div><hr>
+            
+            <div id="technicians">
+                <div class="mb-3" th:each="technician,status : ${report.report.trainedTechnician}">
+                    <label for="${technician.technician}" class="fw-bold">Trained Technician:</label>
+                    <input type="hidden" th:value="${technician.id}" th:field="*{report.trainedTechnician[__${status.index}__].id}"/>
+                    <input type="text" class="form-control" th:value="${technician.technician}" th:field="*{report.trainedTechnician[__${status.index}__].technician}" disabled readonly/>
+                </div>
+            </div><hr>
+            
+            <div id="components">
+                <div class="mb-3" th:each="component,status : ${report.report.installedComponent}">
+                    <label for="${component.component}" class="fw-bold">Installed Component:</label>
+                    <input type="hidden" th:value="${component.id}" th:field="*{report.installedComponent[__${status.index}__].id}"/>
+                    <div class="row mb-3">
+                        <label for="installName" class="col-sm-2 col-form-label">Name of Installer</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="installName" class="form-control" th:value="${component.installer}" th:field="*{report.installedComponent[__${status.index}__].installer}" disabled readonly/>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="installLoc" class="col-sm-2 col-form-label">Installation Location</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="installLoc" class="form-control" th:value="${component.location}" th:field="*{report.installedComponent[__${status.index}__].location}" disabled readonly/>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="installSize" class="col-sm-2 col-form-label">System Size in Watts</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="installSize" class="form-control" th:value="${component.size}" th:field="*{report.installedComponent[__${status.index}__].size}" disabled readonly/>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="comps" class="col-sm-2 col-form-label">System Components</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="comps" class="form-control" th:value="${component.component}" th:field="*{report.installedComponent[__${status.index}__].component}" disabled readonly/>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="sysCost" class="col-sm-2 col-form-label">System Cost</label>
+                        <div class="col-sm-10">
+                            <input type="number" id="sysCost" step=".01" class="form-control" th:value="${component.cost}" th:field="*{report.installedComponent[__${status.index}__].cost}" disabled readonly/>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="contribution" class="col-sm-2 col-form-label">Contribution</label>
+                        <div class="col-sm-10">
+                            <input type="number" id="contribution" step=".01" class="form-control" th:value="${component.contribution}" th:field="*{report.installedComponent[__${status.index}__].contribution}" disabled readonly/>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+            </div><hr>
+            
+            <div id="media">
+                <div class="mb-3" th:each="media,status : ${report.report.media}">
+                    <label for="${media.media}" class="fw-bold">Photo/Video link:</label>
+                    <input type="hidden" th:value="${media.id}" th:field="*{report.media[__${status.index}__].id}"/>
+                    <input type="text" class="form-control" th:value="${media.media}" th:field="*{report.media[__${status.index}__].media}" disabled readonly/>
+                </div>
+            </div>
+    </div>
+</body>

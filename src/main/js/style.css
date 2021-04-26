@@ -1,0 +1,202 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+p, input, textarea, ul {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  font-size: inherit;
+  color: inherit;
+  font-family: inherit;
+}
+
+textarea[disabled], input[disabled] {
+  pointer-events:none;
+}
+
+.TemplateForm h1 {
+  margin: 32px 32px 64px;
+}
+
+.TemplateForm > form {
+  width: 100%;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  background-color: white;
+  padding-top: 32px;
+  margin-top: 48px;
+}
+
+.Question + .Question {
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+.Question {
+  color: #111827;
+  background-color: #FFFF;
+  position: relative;
+  list-style-type: none;
+  padding: 8px 32px;
+  font-size: 1rem;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto auto;
+  row-gap: 8px;
+}
+
+li.Question.selected {
+  background-color: #F3F4F6;
+  border-left: 4px solid #37B2CA;
+}
+
+.Question:hover {
+  background-color: #E5E7EB;
+}
+
+.Question:not(.selected) .toggle {
+  display: none;
+}
+
+.Question-fields {
+  grid-column: 1 / 3;
+}
+
+.Question-fields > input, .Question-fields > textarea {
+  width: 100%;
+}
+
+.Question-fields > * + * {
+  margin-top: 12px;
+}
+
+.Question-fields input:not([disabled]) {
+  padding: 8px;
+  background-color: white;
+  border: none;
+}
+
+.Question-subtitle {
+  font-size: 0.875rem;
+  color: rgba(107, 114, 128);
+  padding: 8px 0px;
+  resize: none;
+}
+
+.Question.selected .Question-subtitle {
+  background-color: white;
+}
+
+.Question input, .Question textarea {
+  background-color: inherit;
+}
+
+.Question .fake {
+  border: 1px solid #D1D5DB;
+  padding: 8px;
+  resize: none;
+}
+
+.Question-extra {
+  grid-row: 2;
+  grid-column: 1 / 2;
+  display: flex;
+  flex-flow: column wrap;
+  font-size: 1rem;
+}
+
+.Question-extra > input, .Question-extra > label, .Question-extra > textarea {
+  padding: 8px 0px;
+  font-size: 0.875rem;
+}
+
+.Question-extra input:not([disabled]) {
+  background-color: white;
+}
+
+.Question-actions {
+  grid-row: 2;
+  grid-column: 2 / 3;
+  justify-self: end;
+}
+
+.Question-actions > button {
+  background-color: inherit;
+  border: none;
+}
+
+.Question-actions > button:hover svg {
+  stroke-width: 2;
+}
+
+.FloatMenu {
+  display: inline-flex;
+  border: 2px solid #37B2CA;
+  flex-flow: row wrap;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.FloatMenu.active {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.buttonbutton {
+  background-color: #37B2CA;
+  width: 135px;
+  color: #F9FAFB;
+  padding: .375rem .75rem;
+  border: none;
+}
+
+.FloatMenu .buttonbutton-fail {
+  background-color: #EF4444;
+  border: none;
+  text-transform: capitalize;
+  color: #343a40;
+  border-left: 2px solid #111827;
+}
+
+.FloatMenu .buttonbutton-success {
+  background-color: #FFDD19;
+  text-transform: capitalize;
+  font-weight: bold;
+  color: #343a40;
+  border-left: 2px solid #37B2CA;
+}
+
+.buttonbuttonbutton {
+  background-color: #f8f9fa;
+  width: 135px;
+  color: #343a40;
+}
+
+.Toggle-button:hover {
+  background-color: #374151;
+}
+
+.toggle:not(.toggle.active) {
+  display: none;
+}
+
+.FloatMenu > .toggle {
+  display: flex;
+  align-items: stretch;
+}
+
+.FloatMenu > .toggle > button {
+  background-color: #F9FAFB;
+  border: none;
+}
+
+.FloatMenu > .toggle > button:hover {
+  background-color: #E5E7EB;
+}
+
+.FloatMenu > .toggle > button + button {
+  border-left: 1px solid #D1D5DB;
+}
+

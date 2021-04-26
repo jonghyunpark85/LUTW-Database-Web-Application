@@ -1,0 +1,168 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>LUTW Project Reports</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{../css/style.css}">
+</head>
+<body>
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+    <div class="container-lg mt-2">
+        <div class="row">
+        <form th:action="@{/report/{id}(id=${report.report.id} ? ${report.report.id} : 'new')}" th:object="${report}" method="post" class="QuestionForm col-md-8 offset-md-2">
+            <h1 class="display-5 mt-5 mb-1" th:text="${report.report.name != null ? report.report.name : 'New Project'}"></h1>
+            <div th:text="'Created ' + ${report.report.dateCreated}" class="mb-3"></div>
+
+
+            <div class="mb-4">
+                <input type="hidden" th:field="*{report.id}" th:value="*{report.id}"/>
+            </div>
+            
+            <div class="mb-4">
+                <label for="name" class="fw-bold">Name</label>
+                <input type="text" class="form-control" th:value="*{report.name}" th:field="*{report.name}"/>
+            </div>
+            
+            <div class="mb-3">
+                <label for="region" class="fw-bold">Region</label>
+                <input type="text" class="form-control" th:value="*{report.region}" th:field="*{report.region}"/>
+            </div>
+
+            <div class="mb-3">
+                <label th:for="*{report.country}">Country</label>
+                <input type="text" class="form-control" th:value="*{report.country}" th:field="*{report.country}"/>
+            </div>
+
+            <div class="mb-3">
+                <label th:for="*{report.installationStart}">Installation Start</label>
+                <input type="date" class="form-control" th:value="*{report.installationStart}" th:field="*{report.installationStart}"/>
+            </div>
+
+            <div class="mb-3">
+                <label th:for="*{report.installationEnd}">Installation End</label>
+                <input type="date" class="form-control" th:value="*{report.installationEnd}" th:field="*{report.installationEnd}"/>
+            </div>
+            
+            <div id="lessonsLearned">
+                <div class="mb-3" th:each="lesson,status : ${report.report.lessonsLearned}">
+                    <label for="${lesson.lesson}" class="fw-bold">Lesson:</label>
+                    <input type="hidden" th:value="${lesson.id}" th:field="*{report.lessonsLearned[__${status.index}__].id}"/>
+                    <input type="text" class="form-control" th:value="${lesson.lesson}" th:field="*{report.lessonsLearned[__${status.index}__].lesson}"/>
+                    <button type="button" class="btn btn-primary" th:attr="onClick=|removeEntity(this, '${lesson.id}', 'LESSON')|">Delete</button>
+                </div>
+            </div>
+            
+            <div id="stories">
+                <div class="mb-3" th:each="story,status : ${report.report.beneficiaryStory}">
+                    <label for="${story.story}" class="fw-bold">Beneficiary Story:</label>
+                    <input type="hidden" th:value="${story.id}" th:field="*{report.beneficiaryStory[__${status.index}__].id}"/>
+                    <input type="text" class="form-control" th:value="${story.bName}" th:field="*{report.beneficiaryStory[__${status.index}__].bName}" placeholder="Name of Beneficiary"/>
+                    <textarea class="form-control" th:value="${story.story}" th:field="*{report.beneficiaryStory[__${status.index}__].story}" placeholder="Summary of story"/>
+                    <button type="button" class="btn btn-primary" th:attr="onClick=|removeEntity(this, '${story.id}', 'STORY')|">Delete</button>
+                </div>
+            </div>
+            
+            <div id="technicians">
+                <div class="mb-3" th:each="technician,status : ${report.report.trainedTechnician}">
+                    <label for="${technician.technician}" class="fw-bold">Trained Technician:</label>
+                    <input type="hidden" th:value="${technician.id}" th:field="*{report.trainedTechnician[__${status.index}__].id}"/>
+                    <input type="text" class="form-control" th:value="${technician.technician}" th:field="*{report.trainedTechnician[__${status.index}__].technician}"/>
+                    <button type="button" class="btn btn-primary" th:attr="onClick=|removeEntity(this, '${technician.id}', 'TECHNICIAN')|">Delete</button>
+                </div>
+            </div>
+            
+            <div id="components">
+                <div class="mb-3" th:each="component,status : ${report.report.installedComponent}">
+                    <label for="${component.component}" class="fw-bold">Installed Component:</label>
+                    <input type="hidden" th:value="${component.id}" th:field="*{report.installedComponent[__${status.index}__].id}"/>
+                    <input type="text" class="form-control" th:value="${component.installer}" th:field="*{report.installedComponent[__${status.index}__].installer}" placeholder="Name of installers"/>
+                    <input type="text" class="form-control" th:value="${component.location}" th:field="*{report.installedComponent[__${status.index}__].location}" placeholder="Installation location"/>
+                    <input type="text" class="form-control" th:value="${component.size}" th:field="*{report.installedComponent[__${status.index}__].size}" placeholder="System size in Watts"/>
+                    <input type="text" class="form-control" th:value="${component.component}" th:field="*{report.installedComponent[__${status.index}__].component}" placeholder="System components"/>
+                    <input type="number" step=".01" class="form-control" th:value="${component.cost}" th:field="*{report.installedComponent[__${status.index}__].cost}" placeholder="System cost"/>
+                    <input type="number" step=".01" class="form-control" th:value="${component.contribution}" th:field="*{report.installedComponent[__${status.index}__].contribution}" placeholder="Community contribution in local currency"/>
+                    <button type="button" class="btn btn-primary" th:attr="onClick=|removeEntity(this, '${component.id}', 'COMPONENT')|">Delete</button>
+                </div>
+            </div>
+            
+            <div id="media">
+                <div class="mb-3" th:each="media,status : ${report.report.media}">
+                    <label for="${media.media}" class="fw-bold">Photo/Video link:</label>
+                    <input type="hidden" th:value="${media.id}" th:field="*{report.media[__${status.index}__].id}"/>
+                    <input type="text" class="form-control" th:value="${media.media}" th:field="*{report.media[__${status.index}__].media}"/>
+                    <button type="button" class="btn btn-primary" th:attr="onClick=|removeEntity(this, '${media.id}', 'MEDIA')|">Delete</button>
+                </div>
+            </div>
+            
+            <button type="submit" name="addLesson" class="btn btn-secondary">Add Lesson</button>
+            <button type="submit" name="addStory" class="btn btn-secondary">Add Beneficiary Story</button>
+            <button type="submit" name="addTechnician" class="btn btn-secondary">Add Trained Technician</button>
+            <button type="submit" name="addComponent" class="btn btn-secondary">Add Installed Component</button>
+            <button type="submit" name="addMedia" class="btn btn-secondary">Add Photo/Video Link</button>
+            
+            <div class="mb-3" th:each="field,status : ${report.fields}">
+                <input type="hidden" th:value="${field.responseID}" th:field="*{fields[__${status.index}__].responseID}"/>
+                <input type="hidden" th:value="${field.questionID}" th:field="*{fields[__${status.index}__].questionID}"/>
+                <input type="hidden" th:value="${field.prompt}" th:field="*{fields[__${status.index}__].prompt}"/>
+                <input type="hidden" th:value="${field.type}" th:field="*{fields[__${status.index}__].type}"/>
+                <th:block th:switch="${field.type}">
+                    <th:block th:case="'STRING'">
+                        <th:block th:replace="fragments/input :: text(${field.prompt}, 'fields[' + ${status.index} + '].input', ${field.subtitle})" />
+                    </th:block>
+                    <th:block th:case="'NUMBER'">
+                        <th:block th:replace="fragments/input :: number(${field.prompt}, 'fields[' + ${status.index} + '].numberInput', ${field.subtitle})" />
+                    </th:block>
+                    <th:block th:case="'TEXT'">
+                        <th:block th:replace="fragments/input :: bigtext(${field.prompt}, 'fields[' + ${status.index} + '].input', ${field.subtitle})" />
+                    </th:block>
+                    <th:block th:case="'FLOAT'">
+                        <th:block th:replace="fragments/input :: float(${field.prompt}, 'fields[' + ${status.index} + '].floatInput', ${field.subtitle})" />
+                    </th:block>
+                </th:block>
+            </div>
+            <button type="submit" name="submit" class="btn lutw-primary ml-auto">Save</button>
+        </div>     
+        </form>
+    </div>
+    <script th:inline="javascript">
+        const fetchy = (url, body, headers) => {
+            return fetch(url, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    ...headers
+                },
+                body: JSON.stringify(body)
+            });
+        };
+
+        const removeEntity = (element, id, type) => {
+            const token = document.querySelector("meta[name='_csrf']").getAttribute("content");
+            const header = document.querySelector("meta[name='_csrf_header']").getAttribute("content");
+
+            fetchy('/report?deleteEntity', {id, type}, { [header] : token })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('fetch error');
+                }
+                return response.text();
+            }).then(text => {
+                element.parentNode.remove();
+            }).catch(error => {
+                window.alert(error);
+            });
+        };
+
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+</head>
+<body>
+    <th:block th:fragment="text(prompt, field, subtitle)">
+    <div>
+        <label for=*{__${field}__} th:text=${prompt}></label>
+        <div class="subtitle" th:if="${subtitle != null}" th:text="${subtitle}"></div>
+        <input type="text" class="form-control" th:value="*{__${field}__}" th:field="*{__${field}__}" />
+    </div>
+    </th:block>
+
+    <th:block th:fragment="number(prompt, field, subtitle)">
+    <div>
+        <label for=*{__${field}__} th:text=${prompt}></label>
+        <div class="subtitle" th:if="${subtitle != null}" th:text="${subtitle}"></div>
+        <input type="number" step="1" class="form-control" th:value="*{__${field}__}" th:field="*{__${field}__}" />
+    </div>
+    </th:block>
+
+    <th:block th:fragment="bigtext(prompt, field, subtitle)">
+    <div>
+        <label for=*{__${field}__} th:text=${prompt}></label>
+        <div class="subtitle" th:if="${subtitle != null}" th:text="${subtitle}"></div>
+        <textarea class="form-control" th:value="*{__${field}__}" th:field="*{__${field}__}" />
+    </div>
+    </th:block>
+
+    <th:block th:fragment="float(prompt, field, subtitle)">
+    <div>
+        <label for=*{__${field}__} th:text=${prompt}></label>
+        <div class="subtitle" th:if="${subtitle != null}" th:text="${subtitle}"></div>
+        <input type="number" step="0.01" class="form-control" th:value="*{__${field}__}" th:field="*{__${field}__}" />
+    </div>
+    </th:block>
+</body>
+
+</html>

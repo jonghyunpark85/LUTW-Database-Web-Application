@@ -1,0 +1,73 @@
+:root {
+  --lutw-primary: #37B2CA;
+  --lutw-secondary:#FFDD19;
+  --lutw-accent: #22DFCC;
+}
+
+body {
+    background-color: var(--bs-light);
+    color: #212529;
+}
+
+.navbar-brand {
+    font-weight: bolder;
+}
+
+.card {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    border-top: 0;
+}
+
+.card + .card {
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+}
+
+@media (min-width: 992px) {
+    .card {
+        border: 0;
+    }
+    .card + .card {
+        border-top: 0;
+        border-bottom: 0;
+        border-right: 0;
+        border-left: 1px solid rgba(0,0,0,.125);
+    }
+}
+
+.card-subtitle > small {
+    color: var(--bs-gray);
+}
+
+.btn.lutw-primary {
+    background-color: var(--lutw-primary);
+    color: white;
+}
+
+.btn.lutw-primary:hover {
+    background-color: var(--lutw-accent);
+    color: white;
+}
+
+.QuestionForm {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    background-color: white;
+    padding: 32px 32px 64px;
+}
+
+.QuestionForm .subtitle {
+    font-size: 0.875rem;
+    color: rgba(107, 114, 128);
+}
+
+.QuestionForm label + input,
+.QuestionForm label + textarea,
+.QuestionForm .subtitle + input,
+.QuestionForm .subtitle + textarea {
+    margin-top: 8px;
+}
+
+.QuestionForm > div + div {
+    margin-top: 36px;
+}

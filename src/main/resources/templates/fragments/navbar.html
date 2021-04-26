@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-md navbar-light bg-light" th:fragment="navbar">
+            <div class="container-fluid">
+                <a class="navbar-brand font-weight-bold">
+                    <img src="https://lutw.org/wp-content/uploads/LUTWbursttransparent-2.png" alt="logo" width="30" height="30">
+                    LUTW
+                </a>
+                <button class="navbar-toggler lutw-primary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent" th:with="view=${#httpServletRequest.getServletPath()}">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/report}" th:classappend="${#strings.startsWith(view,'/report')? 'active' : ''}">Reports</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/templates}" th:classappend="${#strings.startsWith(view,'/template')? 'active' : ''}">Template</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/summary}" th:classappend="${#strings.startsWith(view,'/summary')? 'active' : ''}">Summary</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/settings}" th:classappend="${#strings.startsWith(view,'/settings')? 'active' : ''}">Settings</a>
+                        </li>
+                    </ul>
+                    <a class="btn lutw-primary" href="/logout" role="button">Log out</a>
+                </div>
+            </div>
+        </nav>
+    </body>
+</html>

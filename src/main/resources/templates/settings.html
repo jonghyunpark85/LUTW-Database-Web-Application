@@ -1,0 +1,56 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>LUTW Project Reports</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" media="all" 
+              href="../../css/gtvg.css" th:href="@{/css/gtvg.css}" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous"/>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" th:href="@{css/style.css}">
+    </head>
+    <body>
+      <nav th:replace="fragments/navbar :: navbar"></nav>
+
+        <div class="container-lg mt-2">
+            <div th:if="${error}">
+                <div th:text="${error}"></div>
+            </div>
+    
+            <div th:if="${message}">
+                <div th:text="${message}"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Backup database to file:</h5>
+                      <form th:action="@{/settings/backup}" method="POST">
+                        <button type="submit" class="btn btn-primary" name="backup">Backup</button>
+                        </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Select file to restore from:</h5>
+                      <form th:action="@{/settings/restore}" method="POST">
+                        <select name="filePath" id="filePath" required="true">
+                            <th:block th:each="file : ${currentBackups}">
+                                <option value="${file}" th:text="${file}"></option>
+                            </th:block>
+                        </select>
+                        <button type="submit" class="btn btn-primary" name="restore">Restore</button>
+                        </form>
+                    </div>
+                  </div>
+                </div>
+              </div>     
+        </div>
+    </body>
+</html>

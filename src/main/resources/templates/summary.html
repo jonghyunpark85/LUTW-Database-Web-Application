@@ -1,0 +1,51 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>LUTW Project Reports</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" media="all" 
+              href="../../css/gtvg.css" th:href="@{/css/gtvg.css}" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous"/>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" th:href="@{css/style.css}">
+    </head>
+    <body>
+        <nav th:replace="fragments/navbar :: navbar"></nav>
+        <div class="container-lg">
+            <h2 class="display-5 mt-5 mb-3">Reporting Summary</h2>
+
+            <div class="card-deck mb-5">
+                <div class="row">
+                    <th:block th:each="summary, status : ${reportSummaries}">
+                        <div class="card col-lg-2 rounded-0">
+                            <div class="card-body text-center">
+                                <p class="card-title display-6 font-weight-bold text-nowrap" th:text="${summary.value}"></p>
+                                <p class="card-text font-weight-bold text-capitalize" th:text="${summary.description}"></p>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+
+            <h3 class="display-6 mb-3">Totals</h3>
+        
+
+                <div class="row">
+                <th:block th:each="summary, status : ${questionSummaries}">
+                    <div class="card col-lg-2 rounded-0">
+                        <div class="card-body text-center">
+                            <p class="card-title display-6 font-weight-bold text-nowrap" th:text="${summary.value}"></p>
+                            <p class="card-text font-weight-bold text-capitalize" th:text="${summary.description}"></p>
+                            <p class="card-subtitle"><small class="text-right" th:text="${summary.count} + ' Report' + ${summary.count > 1 ? 's' : ''}"></small></p>
+                        </div>
+                    </div>
+                </th:block>
+                </div>
+
+            
+        </div>
+    </body>
+</html>
