@@ -1,4 +1,6 @@
-# sait-lutw-reports
+# SAIT-LUTW-Database-Web-Application
+
+This application has made by Spring boot.
 
 The current build is deployed at http://sait-lutw-reports.azurewebsites.net
 The username and password is 'admin'
